@@ -12,6 +12,8 @@ builder = pyspark.sql.SparkSession.builder.appName("Projeto_1") \
 
 spark = configure_spark_with_delta_pip(builder).getOrCreate()
 
+DATALAKE_PATH = '/home/kleccio/Área de trabalho/portfolio/datalake'
+
 def ingest_bronze_to_silver() -> None:
     BRONZE_PATH = f'{DATALAKE_PATH}/bronze/transaction_data'
     SILVER_PATH = f'{DATALAKE_PATH}/silver/transaction_data'

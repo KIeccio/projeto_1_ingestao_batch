@@ -12,6 +12,9 @@ builder = pyspark.sql.SparkSession.builder.appName("Projeto_1") \
 
 spark = configure_spark_with_delta_pip(builder).getOrCreate()
 
+DATALAKE_PATH = '/home/kleccio/Área de trabalho/portfolio/datalake'
+
+
 def ingest_source_to_bronze(data_processamento:str) -> None:
     
     SOURCE_PATH = f'{DATALAKE_PATH}/source/transaction_system/transaction_data_{data_processamento.replace('-', '_')}.csv'
