@@ -1,10 +1,39 @@
 # Ingestao de dados transacionais em batch via Airflow
 
-## 💡1. Intuito do projeto: 
+Com o objetivo de demonstrar uma arquitetura medalhão (source → bronze → silver), este projeto realiza a coleta de dados transacionais diários. O pipeline completo é executado localmente, com a orquestração do Apache Airflow e o processamento de dados gerenciado pelo Apache Spark e Delta Lake.
 
-A ideia do projeto foi simular um cenários real que um engenheiro de dados tende a passar no dia-a-dia para transferir o máximo de conhecimento possível para os meus projetos práticos.
+>>OBS: foi escolhido PySpark por questões académicas. Em um contexto real, a massa de dados precisaria ser maior para justificar a necessidade da tecnologia. Mas, para utilização junto ao Delta, o PySpark foi a escolha mais simples.
 
-Esse projeto é uma arquitetura medallion de ingestão de dados em batch, que se trata de uma das coisas que um engenheiro de dados mais utiliza no seu dia-a-dia.
+## 📂 1. Estrutura do Projeto
+
+```
+project-root/
+│
+├── mock_data/
+│   └── MOCK_DATA.csv              # Base de dados completa usada como origem
+│
+├── datalake/                      # Pasta externa contendo os dados organizados por camadas. Você precisa criar essa pasta e apontar na variável "DATALAKE_PATH" dentro dos arquivos
+│   ├── source/
+│   │   └── transaction_system/    # Arquivos CSV diários de entrada
+│   ├── bronze/
+│   │   └── transaction_data/      # Dados no formato Delta Lake (raw zone)
+│   └── silver/
+│       └── transaction_data/      # Dados tratados e deduplicados no formato Delta Lake
+│
+├── dags/
+│   └── ingest_transaction_data.py # DAG do Airflow responsável pela ingestão diária. Você pode utilizar o comando 'cp' para copiar essa DAG para sua pasta de DAGs do Airflow.
+│
+├── scripts/
+│   ├── mock_data_spliter.py       # Divide o MOCK_DATA.csv em 10 partes com datas diferentes
+│   ├── ingest_source_to_bronze.py # Realiza ingestão dos arquivos CSV para camada bronze
+│   └── ingest_bronze_to_silver.py # Atualiza a camada silver com dados incrementais da bronze
+│
+├── requirements.txt               # Bibliotecas necessárias para execução
+└── README.md                      # Este arquivo
+```
+
+> ⚠️ Certifique-se de criar manualmente a pasta `datalake/` na raiz do projeto antes da execução e apontar o caminho absoluto nas respectivas variáveis.
+
 
 ## 🧰 2. Tech Stack:
 
