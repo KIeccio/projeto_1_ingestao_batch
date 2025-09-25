@@ -86,3 +86,8 @@ Acesse o Airflow em [http://localhost:8080](http://localhost:8080) e ative a DAG
 
 > A DAG está agendada para rodar todos os dias às 03:00 (`0 3 * * *`), com suporte a **catchup** de dias anteriores. A simulação inclui falhas nos dias em que não existem arquivos.
 
+## Me siga no LinkedIn
+
+- 📲 [LinkedIn](https://www.linkedin.com/in/kleccio/)
+  
+  ![LinkedInProfile](imagens/LinkedInProfile.png)
